@@ -1,0 +1,19 @@
+module Test
+
+(Int) -> Int
+dec x = x - 1
+
+(Int) -> Int
+abs n = if (!(n >= 0)) 0 - n else n
+
+(Int, Int) -> Int
+primeHelper n i = if (i == 1) 1 else if (n % i == 0) 0 else [primeHelper n [dec i]]
+
+(Int) -> Int
+prime n = if (n < 2) 0 else [primeHelper n [dec n]]
+
+(((Int) -> Int), Int) -> Int
+g f a = [f a]
+
+() -> Int
+main = [print [g prime [read]]]

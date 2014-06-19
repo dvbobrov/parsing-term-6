@@ -1,0 +1,20 @@
+grammar PascalLE;
+
+orXor : and orXorC;
+orXorC : XOR and orXorC | OR and orXorC | ;
+
+and : not andC;
+andC : AND not andC | ;
+
+not : term | NOT not;
+
+term : PL orXor PR | VAR;
+
+XOR : #xor#;
+OR : #or#;
+AND : #and#;
+NOT : #not#;
+VAR : #[a-z]#;
+PL : #\\(#;
+PR : #\\)#;
+B : #[\\n\\r\\t ]# -> skip;

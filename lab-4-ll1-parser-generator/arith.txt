@@ -1,0 +1,16 @@
+grammar Arith;
+
+sum[int val] : mul sumC { #res.val = $0.val + $1.val;# };
+sumC[int val] : PLUS mul sumC { #res.val = $1.val + $2.val;# } | { #res.val = 0;# } ;
+
+mul[int val] : t mulC { #res.val = $0.val * $1.val;# };
+mulC[int val] : STAR t mulC { #res.val = $1.val * $2.val;# } | { #res.val = 1;# } ;
+
+t[int val] : PL sum PR { #res.val = $1.val;# } | NUM { #res.val = Integer.parseInt($0.text);# };
+
+B : #[\\t\\n\\r ]# -> skip;
+PL : #\\(#;
+PR : #\\)#;
+PLUS : #\\+#;
+STAR : #\\*#;
+NUM : #-?[0-9]+#;

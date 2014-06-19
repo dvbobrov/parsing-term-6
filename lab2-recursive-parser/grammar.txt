@@ -1,0 +1,45 @@
+Исходная грамматика:
+
+O -> O ("or"|"xor") A
+O -> A
+A -> A "and" N
+A -> N
+N -> "not" N
+N -> T
+T -> [a-z]
+T -> "(" O ")"
+
+Преобразованная грамматика:
+
+O -> AO'
+O' -> "xor" AO'
+O' -> "or" AO'
+O' -> eps
+A -> NA'
+A' -> "and" NA'
+A' -> eps
+N -> "not" N
+N -> T
+T -> "(" O ")"
+T -> [a-z]
+
+Стартовый нетерминал — O
+O — дизъюнкция или xor
+A — конъюнкция
+N — отрицание
+T — переменная или выражение в скобках
+O', A' — продолжения O и A при устранении левой рекурсии
+
+FIRST(O) = { not, (, [a-z] }
+FIRST(O') = { eps, or, xor }
+FIRST(A) = { not, (, [a-z] }
+FIRST(A') = { eps, and }
+FIRST(N) = { not, (, [a-z] }
+FIRST(T) = { (, [a-z] }
+
+FOLLOW(O) = { $, ) }
+FOLLOW(O') = { $, ) }
+FOLLOW(A) = { $, ), or, xor }
+FOLLOW(A') = { $, ), or, xor }
+FOLLOW(N) = { $, ), or, xor, and }
+FOLLOW(T) = { $, ), or, xor, and }
